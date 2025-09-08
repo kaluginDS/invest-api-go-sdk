@@ -244,7 +244,7 @@ func (md *MarketDataServiceClient) GetAllHistoricCandles(req *GetHistoricCandles
 		pbClient: pb.NewInstrumentsServiceClient(md.conn),
 	}
 
-	resp, err := instrumentsService.FindInstrument(req.Instrument)
+	resp, err := instrumentsService.FindInstrument(req.Instrument, nil)
 	if err != nil {
 		return nil, err
 	}

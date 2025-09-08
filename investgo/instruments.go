@@ -563,10 +563,14 @@ func (is *InstrumentsServiceClient) GetBrandBy(id string) (*Brand, error) {
 }
 
 // FindInstrument - Метод поиска инструмента, например по тикеру или названию компании
-func (is *InstrumentsServiceClient) FindInstrument(query string) (*FindInstrumentResponse, error) {
+func (is *InstrumentsServiceClient) FindInstrument(query string, instrumentType *pb.InstrumentType) (*FindInstrumentResponse, error) {
 	var header, trailer metadata.MD
+
+	var apiTradeAvailableFlag = true
 	resp, err := is.pbClient.FindInstrument(is.ctx, &pb.FindInstrumentRequest{
-		Query: query,
+		Query:                 query,
+		InstrumentKind:        instrumentType,
+		ApiTradeAvailableFlag: &apiTradeAvailableFlag,
 	}, grpc.Header(&header), grpc.Trailer(&trailer))
 	if err != nil {
 		header = trailer
